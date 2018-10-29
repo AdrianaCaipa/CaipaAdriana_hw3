@@ -44,3 +44,4 @@ plt.scatter(ejex[np.where(etiqueta[:,1]=='M')],ejey[np.where(etiqueta[:,1]=='M')
 plt.legend()
 plt.savefig('CaipaAdrianaPCA.pdf')
 
+print "PCA si funciona de cierta manera, ya que sirve para ver si un tumor es benigno o maligno"
