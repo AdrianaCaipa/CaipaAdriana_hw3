@@ -16,7 +16,9 @@ frecuencias=np.fft.fftfreq(senal.shape[0],dt)
 	
 plt.figure()
 plt.plot(frecuencias,fourier)
-plt.savefig('CaipaAdriana_TF.pdf')
-
-
-
+plt.show()
+#plt.savefig('CaipaAdriana_TF.pdf')
+plt.figure()
+plt.plot(senal[:,0],senal[:,1])
+plt.savefig("CaipaAdriana_Signal.pdf")
+print "Mayores frecuencias en 383.3, 237,138.5"
