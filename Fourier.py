@@ -5,7 +5,7 @@ from scipy.fftpack import fft, ifft
 senal= np.genfromtxt('signal.dat', delimiter = ',')
 incompletos= np.genfromtxt('incompletos.dat',delimiter=',')
 
-fourier=np.zeros(senal.shape[0])
+fourier=np.zeros(senal.shape[0])+0*1j
 
 arreglo=np.arange(senal.shape[0])
 for k in range (senal.shape[0]):
@@ -13,7 +13,7 @@ for k in range (senal.shape[0]):
 dt= senal[2,0]-senal[1,0]
 print dt
 frecuencias=np.fft.fftfreq(senal.shape[0],dt)
-gfkdg = np.fft.fft(senal[:,1])
+
 plt.figure()
 plt.plot(frecuencias,abs(fourier))
 
@@ -32,4 +32,6 @@ valores1= fourier*valores
 inversa= np.fft.ifft(valores1)
 plt.figure()
 plt.plot(senal[:,0],inversa)
-plt.show()
+plt.savefig('CaipaAdriana_filtrada.pdf')
+
+
