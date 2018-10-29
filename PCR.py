@@ -15,6 +15,11 @@ for i in range(datos_nuevos.shape[1]):
 	x[:,i]=datos_nuevos[:,i]-promedio
 	desviacion= (np.var(datos_nuevos[:,i]))**(0.5)
 	x[:,i]= x[:,i]/desviacion
-	print x[:,i]
 	
-	
+matriz_cov=np.zeros([datos_nuevos.shape[1],datos_nuevos.shape[1]])	
+for i in range(datos_nuevos.shape[1]):
+	for j in range(datos_nuevos.shape[1]):
+		matriz_cov[i,j]= np.sum(x[:,i]*x[:,j])/(datos_nuevos.shape[1]-1)
+		
+print matriz_cov
+
