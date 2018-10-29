@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt 
+from numpy import linalg as LA
 
 ##Almecene los datos###
 datos_numeros= np.genfromtxt('http://ftp.cs.wisc.edu/math-prog/cpo-dataset/machine-learn/cancer/WDBC/WDBC.dat',delimiter=',')
@@ -7,7 +8,7 @@ etiqueta= np.genfromtxt('http://ftp.cs.wisc.edu/math-prog/cpo-dataset/machine-le
 
 
 datos_nuevos = np.delete(datos_numeros,1,1)
-print datos_nuevos
+#print datos_nuevos
 
 x=np.zeros(datos_nuevos.shape)
 for i in range(datos_nuevos.shape[1]):
@@ -23,3 +24,11 @@ for i in range(datos_nuevos.shape[1]):
 		
 print matriz_cov
 
+###Autovalores y autovectores###
+w,v=LA.eig(matriz_cov)
+for i in range(len(w)):
+	
+	print "El valor propio es",w[i]
+	print "El vector propio es",v[i]  
+
+###
