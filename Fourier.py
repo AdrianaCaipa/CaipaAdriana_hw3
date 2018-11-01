@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Oct 29 20:50:05 2018
+
+@author: adria
+"""
+
 import numpy as np 
 import matplotlib.pyplot as plt
 from scipy.fftpack import fft, ifft
@@ -12,7 +19,7 @@ arreglo=np.arange(senal.shape[0])
 for k in range (senal.shape[0]):
 	fourier[k]=np.sum(senal[:,1]*np.exp((-2*1j*np.pi*k*(arreglo)/senal.shape[0])))
 dt= senal[2,0]-senal[1,0]
-print dt
+print (dt)
 frecuencias=np.fft.fftfreq(senal.shape[0],dt)
 
 plt.figure()
@@ -22,7 +29,7 @@ plt.savefig('CaipaAdriana_TF.pdf')
 plt.figure()
 plt.plot(senal[:,0],senal[:,1])
 plt.savefig("CaipaAdriana_Signal.pdf")
-print "Mayores frecuencias en 383.3, 237,138.5"
+print ("Mayores frecuencias en 383.3, 237,138.5")
 
 valores=np.zeros(frecuencias.shape[0])
 for i in range(frecuencias.shape[0]):
@@ -35,7 +42,7 @@ plt.figure()
 plt.plot(senal[:,0],inversa)
 plt.savefig('CaipaAdriana_filtrada.pdf')
 
-print "No se puede realizar la transformada de Fourier de los datos incompletos porque ..."
+print ("No se puede realizar la transformada de Fourier de los datos incompletos porque presentan distintas frecuencias")
 
 x_tabla= incompletos[:,0]
 y_tabla= incompletos[:,1]
@@ -67,15 +74,86 @@ plt.plot(frecuencias2, fourier2,c='r', label = 'Interpola cub')
 plt.legend()
 plt.savefig("CaipaAdriana_TF_Interpola.pdf")
 
-#####Filtro####
-print "Los valores mas alejados del cero cambian mucho la amplitud, comparando la interpolacion cuadratica, cubica y la senal"
+#####Filtro 1000Hz####
+print ("Los valores mas alejados del cero cambian mucho la amplitud, comparando la interpolacion cuadratica, cubica y la senal")
 
-valores_2=np.zeros(frecuencias1.shape[0])
-for i in range(frecuencias1.shape[0]):
-	if abs(frecuencias1[i])<=1000:
+valores_2=np.zeros(frecuencias.shape[0])
+for i in range(frecuencias.shape[0]):
+	if abs(frecuencias[i])<=1000:
 		valores_2[i]=1
+        
 valores_nuevos= fourier*valores_2
 inversa1= np.fft.ifft(valores_nuevos)
-####Corte 500Hz###
 
+valores_3=np.zeros(frecuencias1.shape[0])
+for i in range(frecuencias1.shape[0]):
+	if abs(frecuencias1[i])<=1000:
+		valores_3[i]=1
+        
+valores_nuevos1= fourier*valores_3
+inversa2= np.fft.ifft(valores_nuevos1)
+      
+        
+valores_4=np.zeros(frecuencias2.shape[0])
+for i in range(frecuencias2.shape[0]):
+	if abs(frecuencias2[i])<=1000:
+		valores_4[i]=1
+        
+valores_nuevos2= fourier*valores_4
+inversa3= np.fft.ifft(valores_nuevos2)
+  
 
+plt.figure()
+plt.subplot(311)
+plt.plot(senal[:,0],inversa1,c='m', label = 'Fourier senal')
+plt.legend()
+plt.subplot(312)
+plt.plot(senal[:,0],inversa2,c='c', label = 'Interpola cuad')
+plt.legend()
+plt.subplot(313)
+plt.plot(senal[:,0],inversa3,c='r', label = 'Interpola cub')
+plt.title('Filtro 1000Hz')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('Amplitud')
+plt.legend()
+plt.savefig("CaipaAdriana_2Filtros1000Hz.pdf")
+#####Filtro 500Hz####
+valores_5=np.zeros(frecuencias.shape[0])
+for i in range(frecuencias.shape[0]):
+	if abs(frecuencias[i])<=500:
+		valores_5[i]=1
+        
+valores_nuevos3= fourier*valores_5
+inversa4= np.fft.ifft(valores_nuevos3)
+
+valores_6=np.zeros(frecuencias1.shape[0])
+for i in range(frecuencias1.shape[0]):
+	if abs(frecuencias1[i])<=500:
+		valores_6[i]=1
+        
+valores_nuevos4= fourier*valores_6
+inversa5= np.fft.ifft(valores_nuevos4)
+
+valores_7=np.zeros(frecuencias2.shape[0])
+for i in range(frecuencias2.shape[0]):
+	if abs(frecuencias2[i])<=500:
+		valores_7[i]=1
+        
+valores_nuevos5= fourier*valores_7
+inversa6= np.fft.ifft(valores_nuevos5)
+
+plt.figure()
+plt.subplot(311)
+plt.plot(senal[:,0],inversa4,c='m', label = 'Fourier senal')
+plt.legend()
+plt.subplot(312)
+plt.plot(senal[:,0],inversa5,c='c', label = 'Interpola cuad')
+plt.legend()
+plt.subplot(313)
+plt.plot(senal[:,0],inversa6,c='r', label = 'Interpola cub')
+plt.title('Filtro 500Hz')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('Amplitud')
+plt.legend()
+
+plt.savefig("CaipaAdriana_2Filtros.pdf")
